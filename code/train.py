@@ -14,6 +14,8 @@ from torch.optim.lr_scheduler import StepLR
 import time
 import datetime
 from train_utils import AverageMeter, accuracy, init_logfile, log
+import torchvision
+import torchvision.transforms as transforms
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('dataset', type=str, choices=DATASETS)
