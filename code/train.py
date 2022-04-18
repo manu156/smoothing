@@ -60,12 +60,11 @@ def main():
                                         download=True, transform=transform)
     testset = torchvision.datasets.CIFAR10(root='./data', train=False,
                                        download=True, transform=transform)
-    train_dataset = get_dataset(trainset, 'train')
-    test_dataset = get_dataset(testset, 'test')
+
     pin_memory = (args.dataset == "imagenet")
-    train_loader = DataLoader(train_dataset, shuffle=True, batch_size=args.batch,
+    train_loader = DataLoader(trainset, shuffle=True, batch_size=args.batch,
                               num_workers=args.workers, pin_memory=pin_memory)
-    test_loader = DataLoader(test_dataset, shuffle=False, batch_size=args.batch,
+    test_loader = DataLoader(testset, shuffle=False, batch_size=args.batch,
                              num_workers=args.workers, pin_memory=pin_memory)
 
     model = get_architecture(args.arch, trainset)
