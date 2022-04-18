@@ -50,9 +50,16 @@ def main():
 
     if not os.path.exists(args.outdir):
         os.mkdir(args.outdir)
+    transform = transforms.Compose(
+    [transforms.ToTensor(),
+     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-    train_dataset = get_dataset(args.dataset, 'train')
-    test_dataset = get_dataset(args.dataset, 'test')
+    trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
+                                        download=True, transform=transform)
+    testset = torchvision.datasets.CIFAR10(root='./data', train=False,
+                                       download=True, transform=transform)
+    train_dataset = get_dataset(trainset, 'train')
+    test_dataset = get_dataset(testset, 'test')
     pin_memory = (args.dataset == "imagenet")
     train_loader = DataLoader(train_dataset, shuffle=True, batch_size=args.batch,
                               num_workers=args.workers, pin_memory=pin_memory)
